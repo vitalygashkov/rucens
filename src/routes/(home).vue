@@ -25,6 +25,7 @@ import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useServiceRegistry } from '@/composables/useServiceRegistry';
 import {
   restrictionTypeLabels,
@@ -277,13 +278,10 @@ function downloadMergedRoutes(): void {
               }"
               @click="toggleServiceSelection(service.id)"
             >
-              <CardHeader class="gap-3 border-b pb-4 pt-5">
+              <CardHeader class="gap-3 border-b pb-2! pt-5">
                 <div class="flex items-start justify-between gap-3">
                   <div>
                     <CardTitle class="text-base">{{ service.name }}</CardTitle>
-                    <CardDescription class="mt-1">
-                      {{ restrictionTypeLabels[service.restrictionType] }}
-                    </CardDescription>
                   </div>
 
                   <Checkbox
@@ -296,16 +294,23 @@ function downloadMergedRoutes(): void {
                 </div>
               </CardHeader>
 
-              <CardContent class="space-y-3 pb-4 pt-4">
+              <CardContent class="space-y-3 pb-0 pt-0">
                 <div class="flex flex-wrap gap-2">
                   <Badge variant="outline">{{ categoryLabel(service.category) }}</Badge>
-                  <Badge :variant="restrictionBadgeVariant(service.restrictionType)">
-                    {{
-                      service.restrictionType === 'rkn_blocked'
-                        ? 'RKN blocked'
-                        : 'Region restricted'
-                    }}
-                  </Badge>
+                  <Tooltip>
+                    <TooltipTrigger as-child>
+                      <Badge :variant="restrictionBadgeVariant(service.restrictionType)">
+                        {{
+                          service.restrictionType === 'rkn_blocked'
+                            ? 'RKN blocked'
+                            : 'Region restricted'
+                        }}
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {{ restrictionTypeLabels[service.restrictionType] }}
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
 
                 <p class="text-muted-foreground text-sm">
@@ -335,18 +340,20 @@ function downloadMergedRoutes(): void {
             <CardHeader class="border-b pb-4 pt-5">
               <CardTitle class="text-lg">Merged Output</CardTitle>
               <CardDescription>
-                {{ selectedServices.length }} service{{
-                  selectedServices.length === 1 ? '' : 's'
-                }}
+                {{ selectedServices.length }} service{{ selectedServices.length === 1 ? '' : 's' }}
                 selected
               </CardDescription>
             </CardHeader>
 
             <CardContent class="space-y-4 pb-5 pt-5">
-              <div class="grid grid-cols-2 gap-3">
+              <div class="grid grid-cols-3 gap-3">
                 <div class="rounded-lg border bg-background/70 p-3">
                   <p class="text-muted-foreground text-xs">Selected services</p>
                   <p class="mt-1 text-lg font-semibold">{{ selectedServices.length }}</p>
+                </div>
+                <div class="rounded-lg border bg-background/70 p-3">
+                  <p class="text-muted-foreground text-xs">Visible services</p>
+                  <p class="mt-1 text-lg font-semibold">{{ filteredServices.length }}</p>
                 </div>
                 <div class="rounded-lg border bg-background/70 p-3">
                   <p class="text-muted-foreground text-xs">Merged routes</p>
