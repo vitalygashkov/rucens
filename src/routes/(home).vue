@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { toast } from 'vue-sonner';
-import { Copy, Download, Filter, FilterX, Search, SquareCheck } from 'lucide-vue-next';
+import {
+  Copy,
+  Download,
+  Filter,
+  FilterX,
+  Search,
+  SlidersHorizontal,
+  SquareCheck,
+} from 'lucide-vue-next';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,6 +22,7 @@ import {
 } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { useServiceRegistry } from '@/composables/useServiceRegistry';
@@ -46,6 +55,9 @@ const {
 } = useServiceRegistry();
 
 const hasMergedOutput = computed(() => mergedRoutesText.value.length > 0);
+const activeFilterCount = computed(
+  () => selectedCategories.value.length + selectedRestrictionTypes.value.length,
+);
 
 function categoryLabel(category: ServiceCategory): string {
   return category
@@ -127,63 +139,110 @@ function downloadMergedRoutes(): void {
               </CardDescription>
             </CardHeader>
 
-            <CardContent class="space-y-5">
-              <div class="relative">
-                <Search
-                  class="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2"
-                />
-                <Input
-                  v-model="searchQuery"
-                  class="pl-9"
-                  placeholder="Search by service name"
-                  type="search"
-                />
-              </div>
-
-              <div class="grid gap-4 lg:grid-cols-2">
-                <div class="rounded-xl border bg-background/70 p-4">
-                  <p class="mb-3 flex items-center gap-2 text-sm font-medium">
-                    <Filter class="size-4" />
-                    Category filter
-                  </p>
-                  <div class="grid gap-2">
-                    <label
-                      v-for="category in allCategories"
-                      :key="category"
-                      class="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm"
-                    >
-                      <Checkbox
-                        :model-value="selectedCategories.includes(category)"
-                        @update:model-value="
-                          (checked) => setCategorySelection(category, checked === true)
-                        "
-                      />
-                      <span>{{ categoryLabel(category) }}</span>
-                    </label>
-                  </div>
+            <CardContent class="space-y-4">
+              <div class="flex items-center gap-2">
+                <div class="relative flex-1">
+                  <Search
+                    class="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2"
+                  />
+                  <Input
+                    v-model="searchQuery"
+                    class="pl-9"
+                    placeholder="Search by service name"
+                    type="search"
+                  />
                 </div>
 
-                <div class="rounded-xl border bg-background/70 p-4">
-                  <p class="mb-3 flex items-center gap-2 text-sm font-medium">
-                    <Filter class="size-4" />
-                    Restriction type
-                  </p>
-                  <div class="grid gap-2">
-                    <label
-                      v-for="restrictionType in restrictionOptions"
-                      :key="restrictionType"
-                      class="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm"
-                    >
-                      <Checkbox
-                        :model-value="selectedRestrictionTypes.includes(restrictionType)"
-                        @update:model-value="
-                          (checked) => setRestrictionSelection(restrictionType, checked === true)
-                        "
-                      />
-                      <span>{{ restrictionTypeLabels[restrictionType] }}</span>
-                    </label>
-                  </div>
-                </div>
+                <Popover>
+                  <PopoverTrigger as-child>
+                    <Button variant="outline" class="shrink-0">
+                      <SlidersHorizontal class="size-4" />
+                      Filters
+                      <Badge
+                        v-if="activeFilterCount > 0"
+                        variant="secondary"
+                        class="rounded-md px-1.5 py-0 text-[11px]"
+                      >
+                        {{ activeFilterCount }}
+                      </Badge>
+                    </Button>
+                  </PopoverTrigger>
+
+                  <PopoverContent
+                    align="end"
+                    class="w-[min(92vw,540px)] rounded-xl border bg-popover/95 p-0 backdrop-blur"
+                  >
+                    <div class="border-b px-4 py-3">
+                      <p class="text-sm font-semibold">Filters</p>
+                      <p class="text-muted-foreground text-xs">
+                        Narrow results by category and restriction type
+                      </p>
+                    </div>
+
+                    <div class="grid gap-4 p-4 md:grid-cols-2">
+                      <div class="space-y-2">
+                        <p class="flex items-center gap-2 text-sm font-medium">
+                          <Filter class="size-4" />
+                          Category
+                        </p>
+                        <ScrollArea class="h-64 rounded-md border bg-background/50 p-2">
+                          <div class="grid gap-2 pr-2">
+                            <label
+                              v-for="category in allCategories"
+                              :key="category"
+                              class="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm"
+                            >
+                              <Checkbox
+                                :model-value="selectedCategories.includes(category)"
+                                @update:model-value="
+                                  (checked) => setCategorySelection(category, checked === true)
+                                "
+                              />
+                              <span>{{ categoryLabel(category) }}</span>
+                            </label>
+                          </div>
+                        </ScrollArea>
+                      </div>
+
+                      <div class="space-y-2">
+                        <p class="flex items-center gap-2 text-sm font-medium">
+                          <Filter class="size-4" />
+                          Restriction type
+                        </p>
+                        <ScrollArea class="h-64 rounded-md border bg-background/50 p-2">
+                          <div class="grid gap-2 pr-2">
+                            <label
+                              v-for="restrictionType in restrictionOptions"
+                              :key="restrictionType"
+                              class="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm"
+                            >
+                              <Checkbox
+                                :model-value="selectedRestrictionTypes.includes(restrictionType)"
+                                @update:model-value="
+                                  (checked) =>
+                                    setRestrictionSelection(restrictionType, checked === true)
+                                "
+                              />
+                              <span>{{ restrictionTypeLabels[restrictionType] }}</span>
+                            </label>
+                          </div>
+                        </ScrollArea>
+                      </div>
+                    </div>
+
+                    <div class="flex items-center justify-end border-t px-4 py-3">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        :disabled="!hasActiveFilters"
+                        @click="clearFilters"
+                      >
+                        <FilterX class="size-4" />
+                        Clear filters
+                      </Button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </div>
 
               <div class="flex flex-wrap gap-2">
@@ -203,15 +262,6 @@ function downloadMergedRoutes(): void {
                   @click="clearSelection"
                 >
                   Clear selection
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  :disabled="!hasActiveFilters"
-                  @click="clearFilters"
-                >
-                  <FilterX class="size-4" />
-                  Clear filters
                 </Button>
               </div>
             </CardContent>
