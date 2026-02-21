@@ -1,0 +1,470 @@
+[
+  {
+    "id": "anthropic",
+    "name": "Anthropic",
+    "category": "ai",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/anthropic.bat"
+      }
+    ]
+  },
+  {
+    "id": "berkeley",
+    "name": "Berkeley",
+    "category": "education",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/berkeley.bat"
+      }
+    ]
+  },
+  {
+    "id": "chatgpt",
+    "name": "ChatGPT",
+    "category": "ai",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/chatgpt.bat"
+      }
+    ]
+  },
+  {
+    "id": "claude",
+    "name": "Claude",
+    "category": "ai",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/claude.bat"
+      }
+    ]
+  },
+  {
+    "id": "cloudflare",
+    "name": "Cloudflare",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/cloudflare.bat"
+      }
+    ]
+  },
+  {
+    "id": "copilot",
+    "name": "GitHub Copilot",
+    "category": "developer",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/copilot.bat"
+      }
+    ]
+  },
+  {
+    "id": "crunchyroll",
+    "name": "Crunchyroll",
+    "category": "anime",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/crunchyroll.bat"
+      }
+    ]
+  },
+  {
+    "id": "deepl",
+    "name": "DeepL",
+    "category": "translation",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/deepl.bat"
+      }
+    ]
+  },
+  {
+    "id": "deezer",
+    "name": "Deezer",
+    "category": "music",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/deezer.bat"
+      }
+    ]
+  },
+  {
+    "id": "discord",
+    "name": "Discord",
+    "category": "messenger",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/discord.bat"
+      }
+    ]
+  },
+  {
+    "id": "facebook",
+    "name": "Facebook",
+    "category": "social",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/facebook.bat"
+      }
+    ]
+  },
+  {
+    "id": "facetime",
+    "name": "FaceTime",
+    "category": "messenger",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/facetime.bat"
+      }
+    ]
+  },
+  {
+    "id": "fanserials",
+    "name": "FanSerials",
+    "category": "video",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/fanserials.bat"
+      }
+    ]
+  },
+  {
+    "id": "gemini",
+    "name": "Gemini",
+    "category": "ai",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/gemini.bat"
+      }
+    ]
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "category": "developer",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/github.bat"
+      }
+    ]
+  },
+  {
+    "id": "grok",
+    "name": "Grok",
+    "category": "ai",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/grok.bat"
+      }
+    ]
+  },
+  {
+    "id": "hdrezka",
+    "name": "HDrezka",
+    "category": "video",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/hdrezka.bat"
+      }
+    ]
+  },
+  {
+    "id": "instagram",
+    "name": "Instagram",
+    "category": "social",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/instagram.bat"
+      }
+    ]
+  },
+  {
+    "id": "jetbrains",
+    "name": "JetBrains",
+    "category": "developer",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/jetbrains.bat"
+      }
+    ]
+  },
+  {
+    "id": "linkedin",
+    "name": "LinkedIn",
+    "category": "social",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/linkedin.bat"
+      }
+    ]
+  },
+  {
+    "id": "mullvad",
+    "name": "Mullvad",
+    "category": "vpn",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/mullvad.bat"
+      }
+    ]
+  },
+  {
+    "id": "netflix",
+    "name": "Netflix",
+    "category": "video",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/netflix.bat"
+      }
+    ]
+  },
+  {
+    "id": "nnmclub",
+    "name": "NNM Club",
+    "category": "torrent",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/nnmclub.bat"
+      }
+    ]
+  },
+  {
+    "id": "notion",
+    "name": "Notion",
+    "category": "productivity",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/notion.bat"
+      }
+    ]
+  },
+  {
+    "id": "pornhub",
+    "name": "Pornhub",
+    "category": "adult",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/pornhub.bat"
+      }
+    ]
+  },
+  {
+    "id": "protonmail",
+    "name": "Proton Mail",
+    "category": "email",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/protonmail.bat"
+      }
+    ]
+  },
+  {
+    "id": "rutor",
+    "name": "Rutor",
+    "category": "torrent",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/rutor.bat"
+      }
+    ]
+  },
+  {
+    "id": "rutracker",
+    "name": "RuTracker",
+    "category": "torrent",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/rutracker.bat"
+      }
+    ]
+  },
+  {
+    "id": "soundcloud",
+    "name": "SoundCloud",
+    "category": "music",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/soundcloud.bat"
+      }
+    ]
+  },
+  {
+    "id": "speedtest",
+    "name": "Speedtest",
+    "category": "tools",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/speedtest.bat"
+      }
+    ]
+  },
+  {
+    "id": "spotify",
+    "name": "Spotify",
+    "category": "music",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/spotify.bat"
+      }
+    ]
+  },
+  {
+    "id": "telegram",
+    "name": "Telegram",
+    "category": "messenger",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/telegram.bat"
+      }
+    ]
+  },
+  {
+    "id": "tidal",
+    "name": "TIDAL",
+    "category": "music",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/tidal.bat"
+      }
+    ]
+  },
+  {
+    "id": "tiktok",
+    "name": "TikTok",
+    "category": "video",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/tiktok.bat"
+      }
+    ]
+  },
+  {
+    "id": "twitter",
+    "name": "Twitter / X",
+    "category": "social",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/twitter.bat"
+      }
+    ]
+  },
+  {
+    "id": "viber",
+    "name": "Viber",
+    "category": "messenger",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/viber.bat"
+      }
+    ]
+  },
+  {
+    "id": "whatsapp",
+    "name": "WhatsApp",
+    "category": "messenger",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/whatsapp.bat"
+      }
+    ]
+  },
+  {
+    "id": "youtube",
+    "name": "YouTube",
+    "category": "video",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/youtube.bat"
+      }
+    ]
+  },
+  {
+    "id": "zed",
+    "name": "Zed",
+    "category": "developer",
+    "restrictionType": "region_not_supported",
+    "sources": [
+      {
+        "kind": "ip_routes_bat",
+        "path": "/bat/zed.bat"
+      }
+    ]
+  }
+]
