@@ -21,8 +21,12 @@ describe('useServiceRegistry', () => {
     registry.setRestrictionSelection('region_not_supported', true);
 
     const filteredIds = registry.filteredServices.value.map((service) => service.id);
+    const expectedIds = registry.allServices.value
+      .filter((service) => service.restrictionType === 'region_not_supported')
+      .map((service) => service.id);
 
-    expect(filteredIds).toEqual(['gemini', 'grok', 'notion', 'tiktok']);
+    expect(filteredIds).toEqual(expectedIds);
+    expect(filteredIds.length).toBeGreaterThan(0);
   });
 
   it('supports select all visible, selection clearing, and merged output generation', () => {
