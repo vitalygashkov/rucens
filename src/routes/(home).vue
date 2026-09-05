@@ -41,7 +41,9 @@ const {
   getRouteCountForService,
   hasActiveFilters,
   isServiceSelected,
-  mergedRoutes,
+  mergedEntryCount,
+  outputFormat,
+  outputExtension,
   mergedRoutesText,
   restrictionOptions,
   searchQuery,
@@ -96,7 +98,7 @@ function downloadMergedRoutes(): void {
     String(exportDate.getDate()).padStart(2, '0'),
   ].join('-');
 
-  const fileName = `rucens-routes-${fileDate}.bat`;
+  const fileName = `rucens-routes-${fileDate}.${outputExtension.value}`;
   const blob = new Blob([mergedRoutesText.value], {
     type: 'text/plain;charset=utf-8',
   });
@@ -124,8 +126,43 @@ function downloadMergedRoutes(): void {
         </h1>
         <p class="mt-3 max-w-3xl text-sm text-muted-foreground md:text-base">
           Search services, filter by category and restriction type, then select what you need. The
-          app merges route ranges and exports a single Windows <code>.bat</code> file.
+          app combines your selection into a DNS routing list or a Windows <code>.bat</code> file.
         </p>
+        <fieldset class="mt-6" aria-describedby="format-description">
+          <legend class="mb-2 text-sm font-medium">Routing format</legend>
+          <div class="inline-flex max-w-full gap-1 rounded-xl border bg-muted/60 p-1">
+            <label
+              v-for="format in [
+                { value: 'dns', label: 'DNS routing · .txt' },
+                { value: 'bat', label: 'IP routes · .bat' },
+              ]"
+              :key="format.value"
+              class="relative cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring"
+              :class="
+                outputFormat === format.value
+                  ? 'bg-background text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+              "
+            >
+              <input
+                v-model="outputFormat"
+                type="radio"
+                name="routing-format"
+                :value="format.value"
+                class="sr-only"
+              />
+              {{ format.label }}
+            </label>
+          </div>
+          <p id="format-description" class="mt-3 text-sm text-muted-foreground">
+            {{
+              outputFormat === 'dns'
+                ? 'Domains and CIDR ranges for KeeneticOS 5+. Only services with a DNS list are shown.'
+                : 'Static IP routes in the original BAT format.'
+            }}
+            Selections are preserved when switching formats.
+          </p>
+        </fieldset>
       </section>
 
       <div class="grid gap-6 xl:grid-cols-[2fr_1fr]">
@@ -314,8 +351,15 @@ function downloadMergedRoutes(): void {
                 </div>
 
                 <p class="text-muted-foreground text-sm">
-                  {{ getRouteCountForService(service.id) }} route{{
-                    getRouteCountForService(service.id) === 1 ? '' : 's'
+                  {{ getRouteCountForService(service.id) }}
+                  {{
+                    outputFormat === 'dns'
+                      ? getRouteCountForService(service.id) === 1
+                        ? 'entry'
+                        : 'entries'
+                      : getRouteCountForService(service.id) === 1
+                        ? 'route'
+                        : 'routes'
                   }}
                   in source list
                 </p>
@@ -356,8 +400,10 @@ function downloadMergedRoutes(): void {
                   <p class="mt-1 text-lg font-semibold">{{ filteredServices.length }}</p>
                 </div>
                 <div class="rounded-lg border bg-background/70 p-3">
-                  <p class="text-muted-foreground text-xs">Merged routes</p>
-                  <p class="mt-1 text-lg font-semibold">{{ mergedRoutes.length }}</p>
+                  <p class="text-muted-foreground text-xs">
+                    {{ outputFormat === 'dns' ? 'Merged entries' : 'Merged routes' }}
+                  </p>
+                  <p class="mt-1 text-lg font-semibold">{{ mergedEntryCount }}</p>
                 </div>
               </div>
 
@@ -390,7 +436,7 @@ function downloadMergedRoutes(): void {
                 @click="downloadMergedRoutes"
               >
                 <Download class="size-4" />
-                Download .bat
+                Download .{{ outputExtension }}
               </Button>
             </CardFooter>
           </Card>

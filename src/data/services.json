@@ -1,5 +1,17 @@
 [
   {
+    "id": "akamai",
+    "name": "Akamai",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/akamai.txt"
+      }
+    ]
+  },
+  {
     "id": "anthropic",
     "name": "Anthropic",
     "category": "ai",
@@ -56,6 +68,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/cloudflare.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/cloudflare.txt"
       }
     ]
   },
@@ -140,6 +156,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/facetime.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/facetime.txt"
       }
     ]
   },
@@ -152,6 +172,18 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/fanserials.bat"
+      }
+    ]
+  },
+  {
+    "id": "fastly",
+    "name": "Fastly",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/fastly.txt"
       }
     ]
   },
@@ -176,6 +208,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/github.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/github.txt"
       }
     ]
   },
@@ -204,6 +240,18 @@
     ]
   },
   {
+    "id": "hetzner",
+    "name": "Hetzner",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/hetzner.txt"
+      }
+    ]
+  },
+  {
     "id": "instagram",
     "name": "Instagram",
     "category": "social",
@@ -212,6 +260,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/instagram.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/instagram.txt"
       }
     ]
   },
@@ -288,6 +340,30 @@
     ]
   },
   {
+    "id": "ovh",
+    "name": "OVHcloud",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/ovh.txt"
+      }
+    ]
+  },
+  {
+    "id": "patreon",
+    "name": "Patreon",
+    "category": "social",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/patreon.txt"
+      }
+    ]
+  },
+  {
     "id": "pornhub",
     "name": "Pornhub",
     "category": "adult",
@@ -296,6 +372,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/pornhub.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/pornhub.txt"
       }
     ]
   },
@@ -308,6 +388,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/protonmail.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/proton.txt"
       }
     ]
   },
@@ -380,6 +464,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/telegram.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/telegram.txt"
       }
     ]
   },
@@ -404,6 +492,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/tiktok.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/tiktok.txt"
       }
     ]
   },
@@ -416,6 +508,22 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/twitter.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/twitter.txt"
+      }
+    ]
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/vercel.txt"
       }
     ]
   },
@@ -452,6 +560,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/youtube.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/youtube.txt"
       }
     ]
   },
