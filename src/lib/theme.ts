@@ -1,8 +1,7 @@
-import { useDark, useToggle } from '@vueuse/core';
+import { createSharedComposable, useColorMode } from '@vueuse/core';
 
-export const useTheme = () => {
-  const isDark = useDark();
-  const toggleDark = useToggle(isDark);
+export const useTheme = createSharedComposable(() => {
+  const theme = useColorMode({ emitAuto: true });
 
-  return { isDark, toggleDark };
-};
+  return { theme, resolvedTheme: theme.state };
+});

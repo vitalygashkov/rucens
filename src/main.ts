@@ -10,11 +10,6 @@ import { syncDocumentLanguage } from '@/lib/i18n';
 
 syncDocumentLanguage();
 
-document.documentElement.classList.toggle(
-  'dark',
-  window.matchMedia('(prefers-color-scheme: dark)').matches,
-);
-
 const app = createApp(App);
 
 app.use(createPinia());

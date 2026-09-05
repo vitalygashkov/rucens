@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { messages } from '@/lib/i18n';
 import { useTheme } from '@/lib/theme';
 
-useTheme();
+const { resolvedTheme } = useTheme();
 </script>
 
 <template>
@@ -14,6 +14,6 @@ useTheme();
     <TooltipProvider>
       <RouterView />
     </TooltipProvider>
-    <Toaster :container-aria-label="messages.notifications" />
+    <Toaster :theme="resolvedTheme" :container-aria-label="messages.notifications" />
   </div>
 </template>

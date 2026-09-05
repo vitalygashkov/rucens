@@ -10,6 +10,7 @@ import {
   SlidersHorizontal,
   SquareCheck,
 } from 'lucide-vue-next';
+import ThemeSwitcher from '@/components/ThemeSwitcher.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -112,27 +113,30 @@ function downloadMergedRoutes(): void {
       <section class="rounded-3xl border bg-card/80 p-6 shadow-lg backdrop-blur md:p-8">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <p class="text-sm font-medium text-muted-foreground">{{ t.registry }}</p>
-          <div
-            class="inline-flex gap-1 rounded-lg border p-1"
-            role="group"
-            aria-label="Language / Язык"
-          >
-            <Button
-              size="sm"
-              :variant="locale === 'en' ? 'secondary' : 'ghost'"
-              :aria-pressed="locale === 'en'"
-              lang="en"
-              @click="setLocale('en')"
-              >English</Button
+          <div class="flex flex-wrap items-center gap-3">
+            <ThemeSwitcher />
+            <div
+              class="inline-flex gap-1 rounded-lg border p-1"
+              role="group"
+              aria-label="Language / Язык"
             >
-            <Button
-              size="sm"
-              :variant="locale === 'ru' ? 'secondary' : 'ghost'"
-              :aria-pressed="locale === 'ru'"
-              lang="ru"
-              @click="setLocale('ru')"
-              >Русский</Button
-            >
+              <Button
+                size="sm"
+                :variant="locale === 'en' ? 'secondary' : 'ghost'"
+                :aria-pressed="locale === 'en'"
+                lang="en"
+                @click="setLocale('en')"
+                >English</Button
+              >
+              <Button
+                size="sm"
+                :variant="locale === 'ru' ? 'secondary' : 'ghost'"
+                :aria-pressed="locale === 'ru'"
+                lang="ru"
+                @click="setLocale('ru')"
+                >Русский</Button
+              >
+            </div>
           </div>
         </div>
         <h1 class="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
