@@ -27,11 +27,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useServiceRegistry } from '@/composables/useServiceRegistry';
-import {
-  restrictionTypeLabels,
-  type RestrictionType,
-  type ServiceCategory,
-} from '@/types/registry';
+import type { RestrictionType } from '@/types/registry';
+import { locale, messages as t, setLocale } from '@/lib/i18n';
 
 const {
   allCategories,
@@ -62,13 +59,6 @@ const activeFilterCount = computed(
   () => selectedCategories.value.length + selectedRestrictionTypes.value.length,
 );
 
-function categoryLabel(category: ServiceCategory): string {
-  return category
-    .split('_')
-    .map((chunk) => chunk.charAt(0).toUpperCase() + chunk.slice(1))
-    .join(' ');
-}
-
 function restrictionBadgeVariant(type: RestrictionType): 'secondary' | 'destructive' {
   return type === 'rkn_blocked' ? 'destructive' : 'secondary';
 }
@@ -80,9 +70,9 @@ async function copyMergedRoutes(): Promise<void> {
 
   try {
     await navigator.clipboard.writeText(mergedRoutesText.value);
-    toast('Merged routes copied to clipboard');
+    toast(t.value.copied);
   } catch {
-    toast('Clipboard write failed in this browser context');
+    toast(t.value.copyFailed);
   }
 }
 
@@ -110,7 +100,7 @@ function downloadMergedRoutes(): void {
   anchor.click();
 
   URL.revokeObjectURL(url);
-  toast(`Downloaded ${fileName}`);
+  toast(t.value.downloaded(fileName));
 }
 </script>
 
@@ -120,21 +110,44 @@ function downloadMergedRoutes(): void {
   >
     <div class="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-8 md:px-8 md:py-10">
       <section class="rounded-3xl border bg-card/80 p-6 shadow-lg backdrop-blur md:p-8">
-        <p class="text-sm font-medium text-muted-foreground">Rucens Registry</p>
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <p class="text-sm font-medium text-muted-foreground">{{ t.registry }}</p>
+          <div
+            class="inline-flex gap-1 rounded-lg border p-1"
+            role="group"
+            aria-label="Language / Язык"
+          >
+            <Button
+              size="sm"
+              :variant="locale === 'en' ? 'secondary' : 'ghost'"
+              :aria-pressed="locale === 'en'"
+              lang="en"
+              @click="setLocale('en')"
+              >English</Button
+            >
+            <Button
+              size="sm"
+              :variant="locale === 'ru' ? 'secondary' : 'ghost'"
+              :aria-pressed="locale === 'ru'"
+              lang="ru"
+              @click="setLocale('ru')"
+              >Русский</Button
+            >
+          </div>
+        </div>
         <h1 class="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
-          Build your custom route list for restricted services
+          {{ t.heading }}
         </h1>
         <p class="mt-3 max-w-3xl text-sm text-muted-foreground md:text-base">
-          Search services, filter by category and restriction type, then select what you need. The
-          app combines your selection into a DNS routing list or a Windows <code>.bat</code> file.
+          {{ t.introduction }} <code>.bat</code>{{ t.file }}
         </p>
         <fieldset class="mt-6" aria-describedby="format-description">
-          <legend class="mb-2 text-sm font-medium">Routing format</legend>
+          <legend class="mb-2 text-sm font-medium">{{ t.routingFormat }}</legend>
           <div class="inline-flex max-w-full gap-1 rounded-xl border bg-muted/60 p-1">
             <label
               v-for="format in [
-                { value: 'dns', label: 'DNS routing · .txt' },
-                { value: 'bat', label: 'IP routes · .bat' },
+                { value: 'dns', label: t.dnsFormat },
+                { value: 'bat', label: t.batFormat },
               ]"
               :key="format.value"
               class="relative cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring"
@@ -155,12 +168,8 @@ function downloadMergedRoutes(): void {
             </label>
           </div>
           <p id="format-description" class="mt-3 text-sm text-muted-foreground">
-            {{
-              outputFormat === 'dns'
-                ? 'Domains and CIDR ranges for KeeneticOS 5+. Only services with a DNS list are shown.'
-                : 'Static IP routes in the original BAT format.'
-            }}
-            Selections are preserved when switching formats.
+            {{ outputFormat === 'dns' ? t.dnsDescription : t.batDescription }}
+            {{ t.selectionsPreserved }}
           </p>
         </fieldset>
       </section>
@@ -169,11 +178,9 @@ function downloadMergedRoutes(): void {
         <section class="space-y-6">
           <Card class="border bg-card/85 shadow-md backdrop-blur">
             <CardHeader class="pb-4">
-              <CardTitle class="text-lg">Discover Services</CardTitle>
+              <CardTitle class="text-lg">{{ t.discover }}</CardTitle>
               <CardDescription>
-                {{ filteredServices.length }} visible service{{
-                  filteredServices.length === 1 ? '' : 's'
-                }}
+                {{ t.visibleCount(filteredServices.length) }}
               </CardDescription>
             </CardHeader>
 
@@ -186,7 +193,8 @@ function downloadMergedRoutes(): void {
                   <Input
                     v-model="searchQuery"
                     class="pl-9"
-                    placeholder="Search by service name"
+                    :placeholder="t.search"
+                    :aria-label="t.search"
                     type="search"
                   />
                 </div>
@@ -195,7 +203,7 @@ function downloadMergedRoutes(): void {
                   <PopoverTrigger as-child>
                     <Button variant="outline" class="shrink-0">
                       <SlidersHorizontal class="size-4" />
-                      Filters
+                      {{ t.filters }}
                       <Badge
                         v-if="activeFilterCount > 0"
                         variant="secondary"
@@ -211,9 +219,9 @@ function downloadMergedRoutes(): void {
                     class="w-[min(92vw,540px)] rounded-xl border bg-popover/95 p-0 backdrop-blur"
                   >
                     <div class="border-b px-4 py-3">
-                      <p class="text-sm font-semibold">Filters</p>
+                      <p class="text-sm font-semibold">{{ t.filters }}</p>
                       <p class="text-muted-foreground text-xs">
-                        Narrow results by category and restriction type
+                        {{ t.filterDescription }}
                       </p>
                     </div>
 
@@ -221,7 +229,7 @@ function downloadMergedRoutes(): void {
                       <div class="space-y-2">
                         <p class="flex items-center gap-2 text-sm font-medium">
                           <Filter class="size-4" />
-                          Category
+                          {{ t.category }}
                         </p>
                         <ScrollArea class="h-64 rounded-md border bg-background/50 p-2">
                           <div class="grid gap-2 pr-2">
@@ -236,7 +244,7 @@ function downloadMergedRoutes(): void {
                                   (checked) => setCategorySelection(category, checked === true)
                                 "
                               />
-                              <span>{{ categoryLabel(category) }}</span>
+                              <span>{{ t.categories[category] }}</span>
                             </label>
                           </div>
                         </ScrollArea>
@@ -245,7 +253,7 @@ function downloadMergedRoutes(): void {
                       <div class="space-y-2">
                         <p class="flex items-center gap-2 text-sm font-medium">
                           <Filter class="size-4" />
-                          Restriction type
+                          {{ t.restrictionType }}
                         </p>
                         <ScrollArea class="h-64 rounded-md border bg-background/50 p-2">
                           <div class="grid gap-2 pr-2">
@@ -261,7 +269,7 @@ function downloadMergedRoutes(): void {
                                     setRestrictionSelection(restrictionType, checked === true)
                                 "
                               />
-                              <span>{{ restrictionTypeLabels[restrictionType] }}</span>
+                              <span>{{ t.restrictions[restrictionType] }}</span>
                             </label>
                           </div>
                         </ScrollArea>
@@ -276,7 +284,7 @@ function downloadMergedRoutes(): void {
                         @click="clearFilters"
                       >
                         <FilterX class="size-4" />
-                        Clear filters
+                        {{ t.clearFilters }}
                       </Button>
                     </div>
                   </PopoverContent>
@@ -291,7 +299,7 @@ function downloadMergedRoutes(): void {
                   @click="selectAllVisible"
                 >
                   <SquareCheck class="size-4" />
-                  Select all visible
+                  {{ t.selectAll }}
                 </Button>
                 <Button
                   size="sm"
@@ -299,7 +307,7 @@ function downloadMergedRoutes(): void {
                   :disabled="selectedServices.length === 0"
                   @click="clearSelection"
                 >
-                  Clear selection
+                  {{ t.clearSelection }}
                 </Button>
               </div>
             </CardContent>
@@ -333,35 +341,21 @@ function downloadMergedRoutes(): void {
 
               <CardContent class="space-y-3 pb-0 pt-0">
                 <div class="flex flex-wrap gap-2">
-                  <Badge variant="outline">{{ categoryLabel(service.category) }}</Badge>
+                  <Badge variant="outline">{{ t.categories[service.category] }}</Badge>
                   <Tooltip>
                     <TooltipTrigger as-child>
                       <Badge :variant="restrictionBadgeVariant(service.restrictionType)">
-                        {{
-                          service.restrictionType === 'rkn_blocked'
-                            ? 'RKN blocked'
-                            : 'Region restricted'
-                        }}
+                        {{ t.restrictionBadges[service.restrictionType] }}
                       </Badge>
                     </TooltipTrigger>
                     <TooltipContent>
-                      {{ restrictionTypeLabels[service.restrictionType] }}
+                      {{ t.restrictions[service.restrictionType] }}
                     </TooltipContent>
                   </Tooltip>
                 </div>
 
                 <p class="text-muted-foreground text-sm">
-                  {{ getRouteCountForService(service.id) }}
-                  {{
-                    outputFormat === 'dns'
-                      ? getRouteCountForService(service.id) === 1
-                        ? 'entry'
-                        : 'entries'
-                      : getRouteCountForService(service.id) === 1
-                        ? 'route'
-                        : 'routes'
-                  }}
-                  in source list
+                  {{ t.sourceCount(getRouteCountForService(service.id), outputFormat) }}
                 </p>
               </CardContent>
 
@@ -372,7 +366,7 @@ function downloadMergedRoutes(): void {
                   class="w-full"
                   @click.stop="toggleServiceSelection(service.id)"
                 >
-                  {{ isServiceSelected(service.id) ? 'Selected' : 'Select service' }}
+                  {{ isServiceSelected(service.id) ? t.selected : t.selectService }}
                 </Button>
               </CardFooter>
             </Card>
@@ -382,26 +376,25 @@ function downloadMergedRoutes(): void {
         <aside class="xl:sticky xl:top-6 xl:self-start">
           <Card class="border bg-card/90 py-0 shadow-md backdrop-blur">
             <CardHeader class="border-b pb-4 pt-5">
-              <CardTitle class="text-lg">Merged Output</CardTitle>
+              <CardTitle class="text-lg">{{ t.mergedOutput }}</CardTitle>
               <CardDescription>
-                {{ selectedServices.length }} service{{ selectedServices.length === 1 ? '' : 's' }}
-                selected
+                {{ t.selectedCount(selectedServices.length) }}
               </CardDescription>
             </CardHeader>
 
             <CardContent class="space-y-4 pb-5 pt-5">
               <div class="grid grid-cols-3 gap-3">
                 <div class="rounded-lg border bg-background/70 p-3">
-                  <p class="text-muted-foreground text-xs">Selected services</p>
+                  <p class="text-muted-foreground text-xs">{{ t.selectedServices }}</p>
                   <p class="mt-1 text-lg font-semibold">{{ selectedServices.length }}</p>
                 </div>
                 <div class="rounded-lg border bg-background/70 p-3">
-                  <p class="text-muted-foreground text-xs">Visible services</p>
+                  <p class="text-muted-foreground text-xs">{{ t.visibleServices }}</p>
                   <p class="mt-1 text-lg font-semibold">{{ filteredServices.length }}</p>
                 </div>
                 <div class="rounded-lg border bg-background/70 p-3">
                   <p class="text-muted-foreground text-xs">
-                    {{ outputFormat === 'dns' ? 'Merged entries' : 'Merged routes' }}
+                    {{ outputFormat === 'dns' ? t.mergedEntries : t.mergedRoutes }}
                   </p>
                   <p class="mt-1 text-lg font-semibold">{{ mergedEntryCount }}</p>
                 </div>
@@ -410,7 +403,7 @@ function downloadMergedRoutes(): void {
               <Separator />
 
               <div>
-                <p class="mb-2 text-sm font-medium">Preview</p>
+                <p class="mb-2 text-sm font-medium">{{ t.preview }}</p>
                 <ScrollArea class="h-72 rounded-lg border bg-background/75 p-3">
                   <pre
                     v-if="hasMergedOutput"
@@ -418,7 +411,7 @@ function downloadMergedRoutes(): void {
                     >{{ mergedRoutesText }}</pre
                   >
                   <p v-else class="text-muted-foreground text-xs leading-relaxed">
-                    No routes yet. Select one or more services from the list.
+                    {{ t.emptyPreview }}
                   </p>
                 </ScrollArea>
               </div>
@@ -427,7 +420,7 @@ function downloadMergedRoutes(): void {
             <CardFooter class="flex-col gap-2 border-t py-5">
               <Button class="w-full" :disabled="!hasMergedOutput" @click="copyMergedRoutes">
                 <Copy class="size-4" />
-                Copy merged text
+                {{ t.copy }}
               </Button>
               <Button
                 class="w-full"
@@ -436,7 +429,7 @@ function downloadMergedRoutes(): void {
                 @click="downloadMergedRoutes"
               >
                 <Download class="size-4" />
-                Download .{{ outputExtension }}
+                {{ t.download(outputExtension) }}
               </Button>
               <Button as-child class="w-full" variant="outline">
                 <a
@@ -448,8 +441,8 @@ function downloadMergedRoutes(): void {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Open Keenetic {{ outputFormat === 'dns' ? 'DNS' : 'IPv4' }} settings
-                  <span class="sr-only">(opens in a new tab)</span>
+                  {{ t.openSettings(outputFormat === 'dns' ? 'DNS' : 'IPv4') }}
+                  <span class="sr-only">{{ t.newTab }}</span>
                 </a>
               </Button>
             </CardFooter>

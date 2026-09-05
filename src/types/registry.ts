@@ -46,8 +46,3 @@ export interface ServiceEntry {
   restrictionType: RestrictionType;
   sources: ServiceSource[];
 }
-
-export const restrictionTypeLabels: Record<RestrictionType, string> = {
-  rkn_blocked: 'Blocked by Roskomnadzor',
-  region_not_supported: "Service doesn't support Russia",
-};
