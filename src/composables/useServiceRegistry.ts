@@ -1,4 +1,5 @@
 import { computed, ref } from 'vue';
+import { mergeDnsEntries } from '@/lib/dns-parser';
 import servicesJson from '@/data/services.json';
 import { formatRoutesAsBat, mergeRoutes, type ParsedRoute } from '@/lib/route-parser';
 import {
@@ -27,6 +28,15 @@ function sortByName(entries: ServiceEntry[]): ServiceEntry[] {
 }
 
 export function useServiceRegistry() {
+  const outputFormat = ref<'dns' | 'bat'>('dns');
+  const sourceKind = computed(() =>
+    outputFormat.value === 'dns' ? 'domain_list_txt' : 'ip_routes_bat',
+  );
+  const availableServices = computed(() =>
+    allServices.value.filter((service) =>
+      service.sources.some((source) => source.kind === sourceKind.value),
+    ),
+  );
   const searchQuery = ref('');
   const selectedCategories = ref<ServiceCategory[]>([]);
   const selectedRestrictionTypes = ref<RestrictionType[]>([]);
@@ -49,7 +59,7 @@ export function useServiceRegistry() {
   const normalizedSearchQuery = computed(() => searchQuery.value.trim().toLowerCase());
 
   const filteredServices = computed(() => {
-    return allServices.value.filter((service) => {
+    return availableServices.value.filter((service) => {
       const matchesSearch =
         normalizedSearchQuery.value.length === 0 ||
         service.name.toLowerCase().includes(normalizedSearchQuery.value);
@@ -70,7 +80,12 @@ export function useServiceRegistry() {
     const routeCountMap = new Map<string, number>();
 
     for (const service of allServices.value) {
-      routeCountMap.set(service.id, mergeRoutes([service]).length);
+      routeCountMap.set(
+        service.id,
+        outputFormat.value === 'dns'
+          ? mergeDnsEntries([service]).length
+          : mergeRoutes([service]).length,
+      );
     }
 
     return routeCountMap;
@@ -83,12 +98,21 @@ export function useServiceRegistry() {
 
     const selectedIdSet = new Set(selectedServiceIds.value);
 
-    return allServices.value.filter((service) => selectedIdSet.has(service.id));
+    return availableServices.value.filter((service) => selectedIdSet.has(service.id));
   });
 
   const mergedRoutes = computed<ParsedRoute[]>(() => mergeRoutes(selectedServices.value));
 
-  const mergedRoutesText = computed(() => formatRoutesAsBat(mergedRoutes.value));
+  const mergedDnsEntries = computed(() => mergeDnsEntries(selectedServices.value));
+  const mergedEntryCount = computed(() =>
+    outputFormat.value === 'dns' ? mergedDnsEntries.value.length : mergedRoutes.value.length,
+  );
+  const mergedRoutesText = computed(() =>
+    outputFormat.value === 'dns'
+      ? mergedDnsEntries.value.join('\n')
+      : formatRoutesAsBat(mergedRoutes.value),
+  );
+  const outputExtension = computed(() => (outputFormat.value === 'dns' ? 'txt' : 'bat'));
 
   const hasActiveFilters = computed(() => {
     return (
@@ -158,6 +182,9 @@ export function useServiceRegistry() {
     getRouteCountForService,
     hasActiveFilters,
     isServiceSelected,
+    mergedEntryCount,
+    outputFormat,
+    outputExtension,
     mergedRoutes,
     mergedRoutesText,
     normalizedSearchQuery,

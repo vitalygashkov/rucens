@@ -56,6 +56,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/cloudflare.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/cloudflare.txt"
       }
     ]
   },
@@ -140,6 +144,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/facetime.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/facetime.txt"
       }
     ]
   },
@@ -176,6 +184,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/github.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/github.txt"
       }
     ]
   },
@@ -212,6 +224,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/instagram.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/instagram.txt"
       }
     ]
   },
@@ -296,6 +312,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/pornhub.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/pornhub.txt"
       }
     ]
   },
@@ -308,6 +328,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/protonmail.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/proton.txt"
       }
     ]
   },
@@ -380,6 +404,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/telegram.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/telegram.txt"
       }
     ]
   },
@@ -404,6 +432,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/tiktok.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/tiktok.txt"
       }
     ]
   },
@@ -416,6 +448,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/twitter.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/twitter.txt"
       }
     ]
   },
@@ -452,6 +488,10 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/youtube.bat"
+      },
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/youtube.txt"
       }
     ]
   },
