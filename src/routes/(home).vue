@@ -438,6 +438,20 @@ function downloadMergedRoutes(): void {
                 <Download class="size-4" />
                 Download .{{ outputExtension }}
               </Button>
+              <Button as-child class="w-full" variant="outline">
+                <a
+                  :href="
+                    outputFormat === 'dns'
+                      ? 'http://192.168.1.1/staticRoutes/dns'
+                      : 'http://192.168.1.1/staticRoutes/ipv4'
+                  "
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open Keenetic {{ outputFormat === 'dns' ? 'DNS' : 'IPv4' }} settings
+                  <span class="sr-only">(opens in a new tab)</span>
+                </a>
+              </Button>
             </CardFooter>
           </Card>
         </aside>
