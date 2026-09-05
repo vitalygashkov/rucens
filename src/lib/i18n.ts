@@ -14,6 +14,10 @@ const russianCount = (count: number, one: string, few: string, many: string) => 
 
 const en = {
   registry: 'Rucens Registry',
+  theme: 'Theme',
+  systemTheme: 'System',
+  lightTheme: 'Light',
+  darkTheme: 'Dark',
   heading: 'Build your custom route list for restricted services',
   introduction:
     'Search services, filter by category and restriction type, then select what you need. The app combines your selection into a DNS routing list or a Windows',
@@ -88,6 +92,10 @@ const en = {
 
 const ru: typeof en = {
   registry: 'Каталог Rucens',
+  theme: 'Тема',
+  systemTheme: 'Системная',
+  lightTheme: 'Светлая',
+  darkTheme: 'Тёмная',
   heading: 'Создайте свой список маршрутов для сервисов с ограниченным доступом',
   introduction:
     'Найдите сервисы, отфильтруйте их по категории и типу ограничения и выберите нужные. Приложение объединит ваш выбор в список для DNS-маршрутизации или файл Windows в формате',
