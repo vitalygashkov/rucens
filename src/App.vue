@@ -3,6 +3,7 @@ import 'vue-sonner/style.css';
 import { RouterView } from 'vue-router';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/sonner';
+import { messages } from '@/lib/i18n';
 import { useTheme } from '@/lib/theme';
 
 useTheme();
@@ -13,6 +14,6 @@ useTheme();
     <TooltipProvider>
       <RouterView />
     </TooltipProvider>
-    <Toaster />
+    <Toaster :container-aria-label="messages.notifications" />
   </div>
 </template>

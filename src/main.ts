@@ -6,6 +6,9 @@ import { VueQueryPlugin } from '@tanstack/vue-query';
 
 import App from './App.vue';
 import router from './router';
+import { syncDocumentLanguage } from '@/lib/i18n';
+
+syncDocumentLanguage();
 
 document.documentElement.classList.toggle(
   'dark',
