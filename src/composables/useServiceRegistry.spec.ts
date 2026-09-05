@@ -2,6 +2,33 @@ import { describe, expect, it } from 'vitest';
 import { useServiceRegistry } from '@/composables/useServiceRegistry';
 
 describe('useServiceRegistry', () => {
+  it('makes every DNS source selectable and exportable', () => {
+    const registry = useServiceRegistry();
+    const dnsPaths = Object.keys(import.meta.glob('/dns/*.txt')).sort();
+    const registeredPaths = registry.filteredServices.value.flatMap((service) =>
+      service.sources.flatMap((source) => (source.kind === 'domain_list_txt' ? [source.path] : [])),
+    );
+
+    expect([...new Set(registeredPaths)].sort()).toEqual(dnsPaths);
+
+    const dnsOnlyIds = registry.filteredServices.value
+      .filter((service) => service.sources.every((source) => source.kind === 'domain_list_txt'))
+      .map((service) => service.id);
+
+    for (const serviceId of dnsOnlyIds) {
+      registry.clearSelection();
+      registry.setServiceSelection(serviceId, true);
+      expect(registry.mergedEntryCount.value).toBeGreaterThan(0);
+      expect(registry.mergedRoutesText.value.length).toBeGreaterThan(0);
+    }
+
+    registry.outputFormat.value = 'bat';
+    expect(registry.filteredServices.value.some((service) => dnsOnlyIds.includes(service.id))).toBe(
+      false,
+    );
+    expect(registry.mergedRoutesText.value).toBe('');
+  });
+
   it('filters by search query and category', () => {
     const registry = useServiceRegistry();
 

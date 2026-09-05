@@ -1,5 +1,17 @@
 [
   {
+    "id": "akamai",
+    "name": "Akamai",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/akamai.txt"
+      }
+    ]
+  },
+  {
     "id": "anthropic",
     "name": "Anthropic",
     "category": "ai",
@@ -164,6 +176,18 @@
     ]
   },
   {
+    "id": "fastly",
+    "name": "Fastly",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/fastly.txt"
+      }
+    ]
+  },
+  {
     "id": "gemini",
     "name": "Gemini",
     "category": "ai",
@@ -212,6 +236,18 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/hdrezka.bat"
+      }
+    ]
+  },
+  {
+    "id": "hetzner",
+    "name": "Hetzner",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/hetzner.txt"
       }
     ]
   },
@@ -300,6 +336,30 @@
       {
         "kind": "ip_routes_bat",
         "path": "/bat/notion.bat"
+      }
+    ]
+  },
+  {
+    "id": "ovh",
+    "name": "OVHcloud",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/ovh.txt"
+      }
+    ]
+  },
+  {
+    "id": "patreon",
+    "name": "Patreon",
+    "category": "social",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/patreon.txt"
       }
     ]
   },
@@ -452,6 +512,18 @@
       {
         "kind": "domain_list_txt",
         "path": "/dns/twitter.txt"
+      }
+    ]
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "category": "developer",
+    "restrictionType": "rkn_blocked",
+    "sources": [
+      {
+        "kind": "domain_list_txt",
+        "path": "/dns/vercel.txt"
       }
     ]
   },
